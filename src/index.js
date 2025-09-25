@@ -26,6 +26,18 @@ const resolvers = {
       return db.reviews.find(review => review.id === args.id);
     }
   },
+  Mutation: {
+    addGame(_, args) {
+      const game = { id: String(db.games.length + 1), ...args.game };
+      db.games.push(game);
+
+      return game;
+    },
+    deleteGame(_, args) {
+      db.games = db.games.filter(game => game.id !== args.id);
+      return db.games;
+    }
+  },
   Game: {
     reviews(game) {
       return db.reviews.filter(review => review.game_id === game.id);
